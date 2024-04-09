@@ -1,0 +1,1 @@
+Place for theme from https://github.com/ceskaexpedice/keycloak-kramerius-theme/releases/download/7.0.32/keycloak-kramerius-theme.jar

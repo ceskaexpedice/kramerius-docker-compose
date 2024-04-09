@@ -1,0 +1,138 @@
+## Default docker compose file
+version: "3"
+services:
+  kramerius:
+    image: ceskaexpedice/kramerius:7.0.34-dev
+    user: '0'
+    ports:
+      - "8088:8080"
+      - "5005:5005"
+      - "8009:8009"
+    environment:      
+      - kramerius_connectionURL=jdbc:postgresql://krameriusPostgres:5432/kramerius
+      - kramerius_connectionUser=fedoraAdmin
+      - kramerius_connectionPass=fedoraAdmin      
+      - solrHost=http://solr:8983/solr/kramerius
+      - applicationUrl=http://localhost:8080/search
+      - VIRTUAL_HOST=kramerius.snk.sk
+      - UMASK=000
+      - TOMCAT_PASSWORD=blabla
+      - JAVA_OPTS=-Dfile.encoding=UTF-8 
+    volumes:
+ 
+#        Bitnami image - 7.0.32 and less       
+#      - ./server.xml:/opt/bitnami/tomcat/conf/server.xml
+#      - ./logging.properties:/opt/bitnami/tomcat/conf/logging.properties
+#      - ./mnt/import/.kramerius4:/opt/bitnami/tomcat/.kramerius4/
+#      - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
+#      - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
+#      - ./logs/tomcat:/opt/bitnami/tomcat/logs
+#      - ./temp/:/opt/bitnami/tomcat/temp/
+     
+#        Tomcat image - 7.0.33 and more  
+      - ./server.xml:/usr/local/tomcat/tomcat/conf/server.xml
+      - ./logging.properties:/usr/local/tomcat/conf/logging.properties
+      - ./mnt/import/.kramerius4:/root/.kramerius4/
+      - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
+      - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
+      - ./logs/tomcat:/usr/local/tomcat/logs
+      - ./temp/:/usr/local/tomcat/temp/
+ 
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+ 
+    restart: "always"
+    depends_on:
+      - keycloak_eduid
+      - krameriusPostgres
+      - iipimage
+      - imageserver
+      - audioserver
+      - solr
+      
+  krameriusPostgres:
+    image: "postgres:10.1"
+           #image: "postgres:11"
+    environment:
+      - POSTGRES_USER=fedoraAdmin
+      - POSTGRES_PASSWORD=fedoraAdmin
+      - POSTGRES_DB=kramerius
+    volumes:
+      - ./mnt/containers/krameriuspostgres:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"      
+    restart: "always"
+  memcached:
+    image: memcached:latest
+    command: memcached
+    restart: "always"
+  iipimage:
+    image: ceskaexpedice/iipsrv-imageserver:2018
+    user: '0'
+    volumes:
+      - ./mnt/imageserver/iip-data:/data:ro
+      - ./mnt/imageserver/iip-data/media:/media:ro
+    restart: "always"
+  imageserver:
+    image: ceskaexpedice/iipsrv-nginx:2018
+    user: '0'
+    volumes:
+      - ./mnt/imageserver/iip-data:/data:ro
+      - ./mnt/imageserver/iip-data/media:/media:ro
+    ports:
+      - "8888:80"
+    networks:
+      default:
+        aliases:
+          - imageserver.inovatika.dev
+    restart: "always"
+  audioserver:
+    image: nginx
+    volumes:
+      - ./mnt/imageserver/audioserver:/usr/share/nginx/html:ro
+    networks:
+      default:
+        aliases:
+          - audioserver.inovatika.dev
+    restart: "always"
+ 
+  solr:
+    image: solr:latest 
+    environment:
+      - JAVA_OPTS="-Xms1G -Xmx2G"
+      - "SOLR_JAVA_MEM=-Xms1g -Xmx2g"      
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solrdata:/var/solr/data
+    restart: "always"
+
+  keycloakPostgres_eduid:
+    image: "postgres:14.10"
+    volumes:
+      - ./mnt/containers/keycloakpostgres_eduid:/var/lib/postgresql/data
+    restart: "always"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+
+  keycloak_eduid:
+    image: ceskaexpedice/keycloak_eduid:18.0.1-2.17
+    volumes:
+      - ./mnt/containers/eduid/providers:/opt/keycloak/providers
+    environment:
+     KEYCLOAK_ADMIN: keycloakAdmin
+     KEYCLOAK_ADMIN_PASSWORD: keycloakAdmin
+     KC_DB: postgres
+     KC_HOSTNAME: eduid.inovatika.dev
+     KC_HOSTNAME_ADMIN: eduid.inovatika.dev
+     KC_HTTP_ENABLED: false
+     KC_HOSTNAME_STRICT_HTTPS: true
+     KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_LOGOUT_REDIRECT_URI: true
+    ports:
+      - 8990:8080
+    entrypoint: ["/opt/keycloak/bin/eduid.sh", "start", "--db-url=jdbc:postgresql://keycloakPostgres_eduid:5432/keycloak", "--db-username=keycloak", "--db-password=keycloak","--proxy=edge"]
+    depends_on:
+      - keycloakPostgres_eduid
+

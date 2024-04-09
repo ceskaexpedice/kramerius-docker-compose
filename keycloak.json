@@ -1,0 +1,8 @@
+{
+  "realm": "kramerius",
+  "auth-server-url": "https://eduid.____/",
+  "ssl-required": "external",
+  "resource": "krameriusClient",
+  "public-client": true,
+  "confidential-port": 0
+}
