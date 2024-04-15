@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.0.34
+    image: ceskaexpedice/kramerius:7.0.34 # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -84,7 +84,7 @@ services:
     networks:
       default:
         aliases:
-          - imageserver.inovatika.dev
+          - imageserver.inovatika.dev # check it
     restart: "always"
   audioserver:
     image: nginx
@@ -93,7 +93,7 @@ services:
     networks:
       default:
         aliases:
-          - audioserver.inovatika.dev
+          - audioserver.inovatika.dev # check it
     restart: "always"
  
   solr:
@@ -125,8 +125,8 @@ services:
      KEYCLOAK_ADMIN: keycloakAdmin
      KEYCLOAK_ADMIN_PASSWORD: keycloakAdmin
      KC_DB: postgres
-     KC_HOSTNAME: eduid.inovatika.dev
-     KC_HOSTNAME_ADMIN: eduid.inovatika.dev
+     KC_HOSTNAME: eduid.inovatika.dev # check it
+     KC_HOSTNAME_ADMIN: eduid.inovatika.dev # check it
      KC_HTTP_ENABLED: false
      KC_HOSTNAME_STRICT_HTTPS: true
      KC_SPI_LOGIN_PROTOCOL_OPENID_CONNECT_LEGACY_LOGOUT_REDIRECT_URI: true
