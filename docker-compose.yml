@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.0.34-dev
+    image: ceskaexpedice/kramerius:7.0.34
     user: '0'
     ports:
       - "8088:8080"
@@ -104,7 +104,7 @@ services:
     ports:
       - "8983:8983"
     volumes:
-      - ./solrdata:/var/solr/data
+      - ./mnt/containers/solr/data:/var/solr/data
     restart: "always"
 
   keycloakPostgres_eduid:
