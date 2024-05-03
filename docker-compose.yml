@@ -9,14 +9,14 @@ services:
       - "5005:5005"
       - "8009:8009"
     environment:      
-      - kramerius_connectionURL=jdbc:postgresql://krameriusPostgres:5432/kramerius
-      - kramerius_connectionUser=fedoraAdmin
-      - kramerius_connectionPass=fedoraAdmin      
-      - solrHost=http://solr:8983/solr/kramerius
-      - applicationUrl=http://localhost:8080/search
-      - VIRTUAL_HOST=kramerius.snk.sk
+#      - kramerius_connectionURL=jdbc:postgresql://krameriusPostgres:5432/kramerius
+#      - kramerius_connectionUser=fedoraAdmin
+#      - kramerius_connectionPass=fedoraAdmin      
+#      - solrHost=http://solr:8983/solr/kramerius
+#      - applicationUrl=http://localhost:8080/search
+#      - VIRTUAL_HOST=kramerius.snk.sk
       - UMASK=000
-      - TOMCAT_PASSWORD=blabla
+#      - TOMCAT_PASSWORD=blabla
       - JAVA_OPTS=-Dfile.encoding=UTF-8 
     volumes:
  
@@ -151,6 +151,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: "always"
     depends_on:
       - keycloakPostgres_eduid
 
