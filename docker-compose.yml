@@ -43,12 +43,20 @@ services:
  
     restart: "always"
     depends_on:
-      - keycloak_eduid
-      - krameriusPostgres
-      - iipimage
-      - imageserver
-      - audioserver
-      - solr
+      iipimage:
+        condition: service_started
+      memcached:
+        condition: service_started
+      imageserver:
+        condition: service_started
+      audioserver:
+        condition: service_started
+      solr:
+        condition: service_healthy
+      krameriusPostgres:
+        condition: service_started
+      keycloak_eduid:
+        condition: service_healthy
       
   krameriusPostgres:
     image: "postgres:10.1"
@@ -106,6 +114,11 @@ services:
     volumes:
       - ./mnt/containers/solr/data:/var/solr/data
     restart: "always"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8983/solr/admin/info/system"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   keycloakPostgres_eduid:
     image: "postgres:14.10"
@@ -133,6 +146,11 @@ services:
     ports:
       - 8990:8080
     entrypoint: ["/opt/keycloak/bin/eduid.sh", "start", "--db-url=jdbc:postgresql://keycloakPostgres_eduid:5432/keycloak", "--db-username=keycloak", "--db-password=keycloak","--proxy=edge"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - keycloakPostgres_eduid
 
