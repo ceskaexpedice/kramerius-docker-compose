@@ -155,3 +155,23 @@ services:
     depends_on:
       - keycloakPostgres_eduid
 
+  #CDK Channel 
+  #  - Certificates /mnt/containers/cdk_channel/ssl
+  #  - Root CA /mnt/containers/cdk_channel/ssl/ca
+  #  - Server certificates /mnt/containers/cdk_channel/ssl/certs
+  #  - Client (CDK) certificates /mnt/containers/cdk_channel/ssl/client
+  #  - Zip file - send to CDK admin /mnt/containers/cdk_channel/ssl/zip
+  #  - Scripts /mnt/containers/cdk_channel/ssl/scripts
+  #     - test_certificate - client certificate testing
+  #     - test_info - info endpoint testing
+  #     - test_user - user endpoint testing
+  cdk_channel:
+    image: "ceskaexpedice/kramerius-secured-channel:1.0.0-dev1"
+    ports:
+      - 8443:443
+    volumes:
+      - ./mnt/containers/cdk_channel/ssl:/usr/local/etc/ssl/
+      - ./mnt/containers/cdk_channel/conf:/usr/local/apache2/conf/
+    restart: "always"
+    environment:
+      CDK_HOSTNAME: domena.nekde.com
