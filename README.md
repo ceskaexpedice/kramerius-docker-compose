@@ -17,3 +17,15 @@ Spouštěné služby:
      - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/configuration.properties#L16 - Cesta k api serveru
  5. Do adresáře pro [keycloak theme](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/eduid/providers) nahrát téma z [tohoto projektu](https://github.com/ceskaexpedice/keycloak-kramerius-theme/releases/tag/7.0.32) a postupovat dle [tohoto návodu](https://github.com/ceskaexpedice/keycloak-kramerius-theme?tab=readme-ov-file#keycloak-theme-kramerius).
  6. Pozměnit [keycloak.json](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/keycloak.json#L3). 
+
+
+## Chráněný kanál
+Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení do ČDK.  Při spouštění vytvoří serverové i klientské certifikáty, zip soubor, pro poslání certifikátů adminstrátorům ČDK a konfiguraci pro předsazený apache.
+
+### Nutné předpoklady pro spuštění image
+1. Je nutno nastavit envinroment proměnnou, která definuje pro jaký server jsou certifikáty generovány. Viz  [CDK_HOSTNAME](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L177) Poznámka: Skripty automaticky přidáví prefix **cdk-auth.**.  Tedy, pokud je v proměnné hodnota **kramerius.instituce.cz**, pak certifikáty budou vygenerovány pro server **cdk-auth.kramerius.instituce.cz**.
+2. Je nutno nastavit cesty:
+ a.    
+
+
+    
