@@ -25,7 +25,7 @@ Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení
 ### Nutné předpoklady pro spuštění image
 1. Je nutno nastavit envinroment proměnnou, která definuje pro jaký server jsou certifikáty generovány. Viz  [CDK_HOSTNAME](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L177) Poznámka: Skripty automaticky přidáví prefix **cdk-auth.**.  Tedy, pokud je v proměnné hodnota **kramerius.instituce.cz**, pak certifikáty budou vygenerovány pro server **cdk-auth.kramerius.instituce.cz**.
 2. Je nutno nastavit cesty:
-2a. Pro certifikáty viz https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L173
+ - Pro certifikáty viz https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L173
     Vygenerované adresáře mají následující strukturu:
       * `ca`   - Adresář obahující certifikáty pro certifikační autoritu
       * `certs` - Adresář obsahující serverovské certifikáty používané chráněným kanálem
