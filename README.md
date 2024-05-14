@@ -39,6 +39,6 @@ Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení
       * `httpd.conf`, `mime`, `magic`, `extra/httpd-ssl.conf`  - Konfigurační soubory pro apache, který realizuje chráněný kanál v dockeru. Pokud je chráněný kanál spouštěný v rámci docker compose, není potřeba konfiguraci měnit
       * Adresář `cdk-auth.kramerius.instituce.cz` - Konfigurační souboru pro představený apache server. Je nutno pozměnit `/TODO_PATH/` 
 
-Poznámka: Adresáře ssl a conf na lokálním stroji je nutno nejdříve vytvořit jako prázdné.
+Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vytvořit jako prázdné.
 
     
