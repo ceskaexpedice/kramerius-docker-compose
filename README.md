@@ -34,7 +34,6 @@ Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení
       * `zip`  - Zip pro distribuci - Tento zip se posílá administrátorům ČDK
       * `hostname.txt` - Textový soubor obsahující informace o doméně pro kterou byl kanál generován      
  - Pro konfiguraci viz https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L174
-      * `ca`   - Adresář obahující certifikáty pro certifikační autoritu
       * `httpd.conf`, `mime`, `magic`, `extra/httpd-ssl.conf`  - Konfigurační soubory pro apache, který realizuje chráněný kanál v dockeru. Pokud je chráněný kanál spouštěný v rámci docker compose, není potřeba konfiguraci měnit
       * Adresář `cdk-auth.kramerius.instituce.cz` - Konfigurační souboru pro představený apache server. Je nutno pozměnit `/TODO_PATH/` 
 
