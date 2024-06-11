@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.0.34 # check it
+    image: ceskaexpedice/kramerius:7.0.35 # check it
     user: '0'
     ports:
       - "8088:8080"
