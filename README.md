@@ -46,7 +46,7 @@ Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vy
 1. Pridat do /data/kramerius adresar scripts z kramerius-docker-compose repo
 2. spustit command crontab -e a doplnit nasledujici radky
 ```   
-   #NKP Logs
+   # NKP Logs
    0 3 * * * /data/kramerius/cronscripts/generateLogs.sh
    
    # SDNNT sync
