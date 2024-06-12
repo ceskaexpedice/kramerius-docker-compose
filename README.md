@@ -41,4 +41,19 @@ Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení
 
 Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vytvořit jako prázdné.
 
+## Generovani logu pro NKP
+
+1. Pridat do /data/kramerius adresar scripts z kramerius-docker-compose repo
+2. spustit command crontab -e a doplnit nasledujici radky
+```   
+   #NKP Logs
+   0 3 * * * /data/kramerius/cronscripts/generateLogs.sh
+   
+   # SDNNT sync
+   0 21 * * 1,3,5 /data/kramerius/cronscripts/sdnnt_sync.sh
+
+   # SDNNT apply
+   0 23 * * 1,3,5 /data/kramerius/cronscripts/sdnnt_apply.sh
+```
+
     
