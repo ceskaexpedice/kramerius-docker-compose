@@ -1,5 +1,5 @@
 @echo off 
 
-docker build -t ceskaexpedice/kramerius-secured-channel:1.0.1 .
+docker build -t ceskaexpedice/kramerius-secured-channel:1.0.2 .
 
 
