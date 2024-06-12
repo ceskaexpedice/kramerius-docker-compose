@@ -43,8 +43,9 @@ Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vy
 
 ## Generovani logu pro NKP
 
-1. Pridat do `/data/kramerius` adresar `scripts` z kramerius-docker-compose repo
-2. spustit command `crontab -e` a doplnit nasledujici radky:
+1. Je potrebe nechat u pana Holpmka zridit sftp pristup a dodat verejny klic daneho serveru ze ktereho se budou logy posilat
+2. Pridat do `/data/kramerius` adresar `scripts` z kramerius-docker-compose repo
+3. spustit command `crontab -e` a doplnit nasledujici radky:
 ```   
    # NKP Logs
    0 3 * * * /data/kramerius/cronscripts/generateLogs.sh
