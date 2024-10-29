@@ -29,7 +29,7 @@ services:
 #      - ./logs/tomcat:/opt/bitnami/tomcat/logs
 #      - ./temp/:/opt/bitnami/tomcat/temp/
      
-#        Tomcat image - 7.0.33 and more  
+      # Tomcat image - 7.0.33 and more  
       - ./server.xml:/usr/local/tomcat/tomcat/conf/server.xml
       - ./logging.properties:/usr/local/tomcat/conf/logging.properties
       - ./mnt/import/.kramerius4:/root/.kramerius4/

@@ -12,11 +12,15 @@ Spouštěné služby:
  1. Zkontrolovat či nahradit aktuální verzi jádra v `docker compose` https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L5
  2. Pozměnit doménu pro keycloak v docker compose [zde](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L128-L129)
  3. Synchornizovat [jádra](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/solr/data) s [aktuálním stavem](https://github.com/ceskaexpedice/kramerius/tree/master/installation/solr-9.x) 
- 4. Upravit konfiguraci dle aktuálního stavu:
+ 4. Upravit konfiguraci dle aktuálního stavu v souboru `configuration.properties`:
      - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/configuration.properties#L22 - Adresa klientské aplikace
      - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/configuration.properties#L16 - Cesta k api serveru
- 5. Do adresáře pro [keycloak theme](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/eduid/providers) nahrát téma z [tohoto projektu](https://github.com/ceskaexpedice/keycloak-kramerius-theme/releases/tag/7.0.32) a postupovat dle [tohoto návodu](https://github.com/ceskaexpedice/keycloak-kramerius-theme?tab=readme-ov-file#keycloak-theme-kramerius).
- 6. Pozměnit [keycloak.json](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/keycloak.json#L3). 
+ 5. Upravit konfiguraci dle aktuálního stavu v souboru `migration.properties`:
+     - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/migration.properties#L4 - Domena imageserveru
+     - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/migration.properties#L5 - Domena imageserveru
+     - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/migration.properties#L15 - Domena audioserveru
+ 6. Do adresáře pro [keycloak theme](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/eduid/providers) nahrát téma z [tohoto projektu](https://github.com/ceskaexpedice/keycloak-kramerius-theme/releases/tag/7.0.32) a postupovat dle [tohoto návodu](https://github.com/ceskaexpedice/keycloak-kramerius-theme?tab=readme-ov-file#keycloak-theme-kramerius).
+ 7. Pozměnit [keycloak.json](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/keycloak.json#L3). 
 
 
 ## Chráněný kanál
@@ -40,5 +44,21 @@ Docker compose obsahuje image, který realizuje chráněný kanál pro zapojení
       * Adresář `cdk-auth.kramerius.instituce.cz` - Konfigurační souboru pro představený apache server. Je nutno pozměnit `/TODO_PATH/` 
 
 Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vytvořit jako prázdné.
+
+## Generovani logu pro NKP
+
+1. Je potrebe nechat zridit v NKP sftp pristup a dodat verejny klic daneho serveru ze ktereho se budou logy posilat
+2. Pridat do `/data/kramerius` adresar `scripts` z kramerius-docker-compose repo
+3. spustit command `crontab -e` a doplnit nasledujici radky:
+```   
+   # NKP Logs
+   0 3 * * * /data/kramerius/cronscripts/generateLogs.sh
+   
+   # SDNNT sync
+   0 21 * * 1,3,5 /data/kramerius/cronscripts/sdnnt_sync.sh
+
+   # SDNNT apply
+   0 23 * * 1,3,5 /data/kramerius/cronscripts/sdnnt_apply.sh
+```
 
     
