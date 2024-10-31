@@ -76,7 +76,7 @@ if [ ! -f "/usr/local/etc/ssl/hostname.txt" ] || [ "$(cat /usr/local/etc/ssl/hos
 
 	
 	#Zip file 
-	zip -j "$ZIP_DIR/certificates.zip" "$CLIENT_DIR/ceskadigitalniknihovna.cz.crt" "$CLIENT_DIR/ceskadigitalniknihovna.cz.key" "$CA_DIR/kramerius-ca.crt" "$CERT_DIR/cdk-auth.$CDK_HOSTNAME.crt"
+	zip -j "$ZIP_DIR/certificates.zip" "$CLIENT_DIR/ceskadigitalniknihovna.cz.crt" "$CLIENT_DIR/ceskadigitalniknihovna.cz.key" "$CERT_DIR/cdk-auth.$CDK_HOSTNAME.crt"
 
 	#Mkdir 
     mkdir "/usr/local/apache2/conf/cdk-auth.$CDK_HOSTNAME"
