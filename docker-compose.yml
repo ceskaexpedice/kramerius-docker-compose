@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.0.35 # check it
+    image: ceskaexpedice/kramerius:7.0.39 # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -131,7 +131,8 @@ services:
       POSTGRES_PASSWORD: keycloak
 
   keycloak_eduid:
-    image: ceskaexpedice/keycloak_eduid:18.0.1-2.17
+    #image: ceskaexpedice/keycloak_eduid:18.0.1-2.17
+    image: ceskaexpedice/keycloak_eduid:22.0.11-1.10
     volumes:
       - ./mnt/containers/eduid/providers:/opt/keycloak/providers
     environment:
