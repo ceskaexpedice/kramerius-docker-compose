@@ -175,4 +175,4 @@ services:
       - ./mnt/containers/cdk_channel/conf:/usr/local/apache2/conf/
     restart: "always"
     environment:
-      CDK_HOSTNAME: domena.nekde.com
+      CDK_HOSTNAME: domena.nekde.com # check it
