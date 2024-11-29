@@ -167,7 +167,7 @@ services:
   #     - test_info - info endpoint testing
   #     - test_user - user endpoint testing
   cdk_channel:
-    image: "ceskaexpedice/kramerius-secured-channel:1.0.3"
+    image: "ceskaexpedice/kramerius-secured-channel:1.0.4"
     ports:
       - 8443:443
     volumes:
@@ -175,4 +175,4 @@ services:
       - ./mnt/containers/cdk_channel/conf:/usr/local/apache2/conf/
     restart: "always"
     environment:
-      CDK_HOSTNAME: domena.nekde.com
+      CDK_HOSTNAME: domena.nekde.com # check it
