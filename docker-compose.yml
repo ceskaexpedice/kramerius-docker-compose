@@ -17,7 +17,8 @@ services:
 #      - VIRTUAL_HOST=kramerius.snk.sk
       - UMASK=000
 #      - TOMCAT_PASSWORD=blabla
-      - JAVA_OPTS=-Dfile.encoding=UTF-8 
+      - JAVA_OPTS=-Dfile.encoding=UTF-8
+#     - JAVA_OPTS=-Dfile.encoding=UTF-8 -Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit  # in case 500 error - unable to find valid certificate
     volumes:
  
 #        Bitnami image - 7.0.32 and less       
@@ -37,6 +38,7 @@ services:
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
       - ./logs/tomcat:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
+#     - ./security/cacerts:/opt/java/openjdk/lib/security/cacerts  # in case 500 error - unable to find valid certificate
  
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
