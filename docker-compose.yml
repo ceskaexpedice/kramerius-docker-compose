@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.0.39 # check it
+    image: ceskaexpedice/kramerius:7.1.0-rc1 # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -16,7 +16,7 @@ services:
 #      - applicationUrl=http://localhost:8080/search
 #      - VIRTUAL_HOST=kramerius.snk.sk
       - UMASK=000
-#      - TOMCAT_PASSWORD=blabla
+      - HAZELCAST_SERVER_ADDRESSES=lock_server:5701
       - JAVA_OPTS=-Dfile.encoding=UTF-8 
     volumes:
  
@@ -176,3 +176,7 @@ services:
     restart: "always"
     environment:
       CDK_HOSTNAME: domena.nekde.com # check it
+# Lock server 
+  lock_server:
+    image: "ceskaexpedice/hazelcast-locks-server:1.0-rc1"
+    restart: "always"
