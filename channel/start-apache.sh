@@ -142,7 +142,7 @@ if [ ! -f "/usr/local/etc/ssl/hostname.txt" ] || [ "$(cat /usr/local/etc/ssl/hos
     SSLProxyMachineCertificateFile /TODO_PATH/ssl/client/cdk-proxy.crt\n\
 	\n\
 	</VirtualHost>\n\
-	</IfModule>\n" >  "/usr/local/apache2/conf/$CDK_HOSTNAME/cdk-auth.${CDK_HOSTNAME}-ssl.conf"	
+	</IfModule>\n" >  "/usr/local/apache2/conf/$CDK_HOSTNAME/${CDK_HOSTNAME}-ssl.conf"	
 		
 		
 fi
