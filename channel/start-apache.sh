@@ -112,7 +112,7 @@ if [ ! -f "/usr/local/etc/ssl/hostname.txt" ] || [ "$(cat /usr/local/etc/ssl/hos
         ProxyPreserveHost On\n\
 		\n\
         ProxyPass \"https://127.0.0.1:8443/search/\$1\" retry=5\n\
-        ProxyPassReverse \"https://127.0.0.18443/search/\$1\"\n\
+        ProxyPassReverse \"https://127.0.0.8443/search/\$1\"\n\
 		\n\
         <RequireAll>\n\
           <RequireAny>\n\
