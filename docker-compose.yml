@@ -177,7 +177,7 @@ services:
       - ./mnt/containers/cdk_channel/conf:/usr/local/apache2/conf/
     restart: "always"
     environment:
-      CDK_HOSTNAME: domena.nekde.com # check it
+      CDK_HOSTNAME: cdk-auth.domena.nekde.com # check it
 # Lock server 
   lock_server:
     image: "ceskaexpedice/hazelcast-locks-server:1.0-rc1"
