@@ -123,7 +123,7 @@ if [ ! -f "/usr/local/etc/ssl/hostname.txt" ] || [ "$(cat /usr/local/etc/ssl/hos
       </IfModule>\n\
     </LocationMatch>\n\
 	\n\
-    <Directory /var/www/k7.inovatika.dev>\n\
+    <Directory /var/www/$CDK_HOSTNAME>\n\
         Options Indexes FollowSymLinks\n\
         AllowOverride All\n\
         Require all granted\n\
