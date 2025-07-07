@@ -58,7 +58,7 @@ if [ ! -f "/usr/local/etc/ssl/hostname.txt" ] || [ "$(cat /usr/local/etc/ssl/hos
 	openssl req -x509 -new -nodes -key "$CA_DIR/kramerius-ca.key" -sha256 -days 7300 -out "$CA_DIR/kramerius-ca.crt" -passin env:CA_PASSWORD -subj "/C=$COUNTRY/ST=$STATE/O=$ORGANIZATION/CN=$COMMON_NAME" -addext "subjectAltName = $ALT_NAMES"
 
 	# cdk-auth
-	printf "authorityKeyIdentifier=keyid,issuer\nbasicConstraints=CA:FALSE\nkeyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment\nsubjectAltName=@alt_names\n\n[alt_names]\nDNS.1=cdk-auth.${CDK_HOSTNAME}\n" > "$CERT_DIR/$CDK_HOSTNAME.ext"
+	printf "authorityKeyIdentifier=keyid,issuer\nbasicConstraints=CA:FALSE\nkeyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment\nsubjectAltName=@alt_names\n\n[alt_names]\nDNS.1=${CDK_HOSTNAME}\n" > "$CERT_DIR/$CDK_HOSTNAME.ext"
 	openssl genrsa -out "$CERT_DIR/$CDK_HOSTNAME.key" 2048
 	openssl req -new -nodes -key "$CERT_DIR/$CDK_HOSTNAME.key" -out "$CERT_DIR/$CDK_HOSTNAME.csr" -subj "/C=$COUNTRY/ST=$STATE/O=$ORGANIZATION/CN=$COMMON_NAME" -addext "subjectAltName = DNS:$CDK_HOSTNAME"
 	openssl x509 -req -in "$CERT_DIR/$CDK_HOSTNAME.csr" -CA "$CA_DIR/kramerius-ca.crt" -CAkey "$CA_DIR/kramerius-ca.key" -CAcreateserial -out "$CERT_DIR/$CDK_HOSTNAME.crt" -days 5475 -sha256 -extfile "$CERT_DIR/$CDK_HOSTNAME.ext" -passin env:CA_PASSWORD
