@@ -72,6 +72,29 @@ services:
     ports:
       - "15432:5432"      
     restart: "always"
+
+  kramerius_pgbackups:
+    container_name: KrameriusPostgresBackup
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    volumes:
+      - ./krameriuspgbackup:/backups
+    links:
+      - krameriusPostgres
+    depends_on:
+      - krameriusPostgres
+    environment:
+      - POSTGRES_HOST=krameriusPostgres
+      - POSTGRES_DB=kramerius
+      - POSTGRES_USER=fedoraAdmin
+      - POSTGRES_PASSWORD=fedoraAdmin
+      - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+      - SCHEDULE=0 0 23 * * *
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=1
+      - BACKUP_KEEP_MONTHS=1
+      - HEALTHCHECK_PORT=81
+
   memcached:
     image: memcached:latest
     command: memcached
@@ -131,6 +154,29 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: keycloak
+      
+  keycloak_pgbackups:
+    container_name: KeycloakPostgres_backup
+    image: prodrigestivill/postgres-backup-local
+    restart: always
+    volumes:
+      - ./keycloakpgbackup:/backups
+    links:
+      - keycloakPostgres_eduid
+    depends_on:
+      - keycloakPostgres_eduid
+    environment:
+      - POSTGRES_HOST=keycloakPostgres_eduid
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=keycloak
+      - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+      - SCHEDULE=0 0 23 * * *
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=1
+      - BACKUP_KEEP_MONTHS=1
+      - HEALTHCHECK_PORT=81
+
 
   keycloak_eduid:
     #image: ceskaexpedice/keycloak_eduid:18.0.1-2.17
