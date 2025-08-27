@@ -31,7 +31,8 @@ services:
 #      - ./temp/:/opt/bitnami/tomcat/temp/
      
       # Tomcat image - 7.0.33 and more  
-      - ./server.xml:/usr/local/tomcat/tomcat/conf/server.xml
+      - ./server.xml:/usr/local/tomcat/conf/server.xml
+      - ./rewrite.config:/usr/local/tomcat/conf/Catalina/localhost/rewrite.config
       - ./logging.properties:/usr/local/tomcat/conf/logging.properties
       - ./mnt/import/.kramerius4:/root/.kramerius4/
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
@@ -117,7 +118,7 @@ services:
     networks:
       default:
         aliases:
-          - imageserver.inovatika.dev # check it
+          - imageserver.xyz.cz # check it
     restart: "always"
   audioserver:
     image: nginx
@@ -126,7 +127,7 @@ services:
     networks:
       default:
         aliases:
-          - audioserver.inovatika.dev # check it
+          - audioserver.xyz.cz # check it
     restart: "always"
  
   solr:
@@ -227,4 +228,8 @@ services:
 # Lock server 
   lock_server:
     image: "ceskaexpedice/hazelcast-locks-server:1.0-rc1"
+    ports:
+      - "5701:5701"
+      - "5702:5702"
+      - "5703:5703"
     restart: "always"
