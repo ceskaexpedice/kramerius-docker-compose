@@ -17,8 +17,8 @@ services:
 #      - VIRTUAL_HOST=kramerius.snk.sk
       - UMASK=000
       - HAZELCAST_SERVER_ADDRESSES=lock_server:5701
-      - JAVA_OPTS=-Dfile.encoding=UTF-8
-#     - JAVA_OPTS=-Dfile.encoding=UTF-8 -Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit  # in case 500 error - unable to find valid certificate
+      - JAVA_OPTS=-Dfile.encoding=UTF-8 -Xmx4g -Xms4g
+#     - JAVA_OPTS=-Dfile.encoding=UTF-8 -Xmx4g -Xms4g -Djavax.net.ssl.trustStore=/opt/java/openjdk/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=changeit  # in case 500 error - unable to find valid certificate
     volumes:
  
 #        Bitnami image - 7.0.32 and less       
@@ -133,8 +133,8 @@ services:
   solr:
     image: solr:9.6.0 
     environment:
-      - JAVA_OPTS="-Xms1G -Xmx2G"
-      - "SOLR_JAVA_MEM=-Xms1g -Xmx2g"      
+      - JAVA_OPTS="-Xms4g -Xmx4g"
+      - "SOLR_JAVA_MEM=-Xms4g -Xmx4g"
     ports:
       - "8983:8983"
     volumes:
