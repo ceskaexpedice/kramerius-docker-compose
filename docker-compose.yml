@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.1.1 # check it
+    image: ceskaexpedice/kramerius:7.1.2 # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -227,7 +227,7 @@ services:
       CDK_HOSTNAME: cdk-auth.domena.nekde.com # check it
 # Lock server 
   lock_server:
-    image: "ceskaexpedice/hazelcast-locks-server:1.0-rc1"
+    image: "ceskaexpedice/hazelcast-locks-server:1.0"
     ports:
       - "5701:5701"
       - "5702:5702"
