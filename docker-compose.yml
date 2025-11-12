@@ -41,7 +41,7 @@ services:
       - ./temp/:/usr/local/tomcat/temp/
 #     - ./security/cacerts:/opt/java/openjdk/lib/security/cacerts  # in case 500 error - unable to find valid certificate
  
-      - /etc/timezone:/etc/timezone:ro
+#     - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
  
     restart: "always"
