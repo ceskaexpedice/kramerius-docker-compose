@@ -11,7 +11,7 @@ Spouštěné služby:
 ## Nutné instalační kroky
  1. Zkontrolovat či nahradit aktuální verzi jádra v `docker compose` https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L5
  2. Pozměnit doménu pro keycloak v docker compose [zde](https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L144-L145)
- 3. Synchornizovat [jádra](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/solr/data) s [aktuálním stavem](https://github.com/ceskaexpedice/kramerius/tree/master/installation/solr-9.x) a dát jim plná práva pro zápis
+ 3. Synchornizovat [jádra](https://github.com/ceskaexpedice/kramerius-docker-compose/tree/main/mnt/containers/solr/data) s patricnym balickem instalation.zip, ktery je pripojen ke kazdemu releasu, kde naleznete adresar se jmenem **solr-9.x**
  4. Upravit konfiguraci dle aktuálního stavu v souboru `configuration.properties`:
      - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/configuration.properties#L22 - Adresa klientské aplikace
      - https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/mnt/import/.kramerius4/configuration.properties#L16 - Cesta k api serveru
