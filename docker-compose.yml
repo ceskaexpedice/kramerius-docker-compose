@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:7.1.2 # check it
+    image: ceskaexpedice/kramerius:7.2.0-rc1 # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -205,6 +205,7 @@ services:
     depends_on:
       - keycloakPostgres_eduid
 
+
   #CDK Channel 
   #  - Certificates /mnt/containers/cdk_channel/ssl
   #  - Root CA /mnt/containers/cdk_channel/ssl/ca
@@ -232,4 +233,69 @@ services:
       - "5701:5701"
       - "5702:5702"
       - "5703:5703"
+    restart: "always"
+
+
+  ## Process platform    
+  processPostgres:
+    image: "postgres:10.1"
+           #image: "postgres:11"
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 5s
+      retries: 5           
+    environment:
+      - POSTGRES_USER=process
+      - POSTGRES_PASSWORD=process
+      - POSTGRES_DB=process
+    volumes:
+      - ./mnt/containers/processpostgres:/var/lib/postgresql/data
+    ports:
+      - "25432:5432"      
+    restart: "always"
+
+  processManager:
+    image: "ceskaexpedice/process-manager:1.0"
+           #image: "postgres:11"
+    depends_on:
+      processPostgres:
+        condition: service_healthy           
+    
+    environment:
+      - JDBC_USERNAME=process
+      - JDBC_PASSWORD=process
+      - JDBC_URL=jdbc:postgresql://processPostgres:5432/process
+    ports:
+      - "8082:8080"      
+    restart: "always"
+
+  ## CDK worker 
+  cdkWorker:
+    image: "ceskaexpedice/cdk-worker:7.2.0-rc1"
+           #image: "postgres:11"
+    depends_on:
+      processPostgres:
+        condition: service_healthy           
+    
+    environment:
+      - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
+      - WORKER_BASE_URL=http://cdkWorker:8080/worker/api/
+    ports:
+      - "8083:8080"      
+    restart: "always"
+
+  ## CURATOR worker 
+  curatorWorker:
+    image: "ceskaexpedice/curator-worker:7.2.0-rc1"
+           #image: "postgres:11"
+    depends_on:
+      processPostgres:
+        condition: service_healthy           
+    
+    environment:
+      - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
+      - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
+    ports:
+      - "8084:8080"      
     restart: "always"
