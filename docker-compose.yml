@@ -267,7 +267,7 @@ services:
       - JDBC_PASSWORD=process
       - JDBC_URL=jdbc:postgresql://processPostgres:5432/process
     ports:
-      - "8082:8080"      
+      - "8082:8080"   # Dashboard & openapi for process manager   
     restart: "always"
 
   ## CDK worker 
@@ -282,7 +282,7 @@ services:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://cdkWorker:8080/worker/api/
     ports:
-      - "8083:8080"      
+      - "8083:8080"  # Dashboard & openapi for curator worker    
     restart: "always"
 
   ## CURATOR worker 
@@ -297,5 +297,5 @@ services:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
     ports:
-      - "8084:8080"      
+      - "8084:8080"  # Dashboard & openapi for cdk worker    
     restart: "always"
