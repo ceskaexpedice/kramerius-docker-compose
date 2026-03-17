@@ -283,7 +283,7 @@ services:
     restart: "always"
 
 
-  # CURATOR worker 
+  # PUBLIC worker 
   publicWorker:
     image: "ceskaexpedice/public-worker:7.2.0"
     depends_on:
