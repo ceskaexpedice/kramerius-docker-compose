@@ -211,7 +211,7 @@ services:
 
   # Lock server 
   lock_server:
-    image: "ceskaexpedice/hazelcast-locks-server:1.0"
+    image: "ceskaexpedice/hazelcast-locks-server:2.0"
     ports:
       - "5701:5701"
       - "5702:5702"
