@@ -219,79 +219,107 @@ services:
     restart: "always"
 
 
-  # Process platform    
-  processPostgres:
-    image: "postgres:10.1"
-    healthcheck: 
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
-      interval: 5s
-      timeout: 5s
-      retries: 5           
-    environment:
-      - POSTGRES_USER=process
-      - POSTGRES_PASSWORD=process
-      - POSTGRES_DB=process
+
+
+  ###### --- UPDATE --- ######
+  kramerius_update:
+    image: ceskaexpedice/kramerius:7.1.7
+    user: '0'
+    ports:
+      - "8089:8080" # check it
+      - "5006:5005" # check it
+      - "8010:8009" # check it
+    environment:      
+      - UMASK=000
+      - HAZELCAST_SERVER_ADDRESSES=lock_server:5701
+      - JAVA_OPTS=-Dfile.encoding=UTF-8 
     volumes:
-      - ./mnt/containers/processpostgres:/var/lib/postgresql/data
-    ports:
-      - "25432:5432"      
+      # Tomcat image - 7.0.33 and more  
+      - ./server.xml:/usr/local/tomcat/tomcat/conf/server.xml
+      - ./logging.properties:/usr/local/tomcat/conf/logging.properties
+      - ./mnt/import/.kramerius4_update:/root/.kramerius4/ # check it
+      - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
+      - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
+      - ./logs/tomcat:/usr/local/tomcat/logs
+      - ./temp/:/usr/local/tomcat/temp/
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     restart: "always"
 
 
-  processManager:
-    image: "ceskaexpedice/process-manager:1.5"
-    depends_on:
-      processPostgres:
-        condition: service_healthy           
-    
+  krameriusPostgres_update:
+    image: "postgres:10.1"
     environment:
-      - JDBC_USERNAME=process
-      - JDBC_PASSWORD=process
-      - JDBC_URL=jdbc:postgresql://processPostgres:5432/process
-    ports:
-      - "8082:8080"   # Dashboard & openapi for process manager   
+      - POSTGRES_USER=fedoraAdmin
+      - POSTGRES_PASSWORD=fedoraAdmin
+      - POSTGRES_DB=kramerius
+    volumes:
+      - ./mnt/containers/krameriuspostgres_update:/var/lib/postgresql/data
     restart: "always"
 
 
-  ## CDK worker 
-  #cdkWorker:
-  #  image: "ceskaexpedice/cdk-worker:7.2.0-rc1"
-  #         #image: "postgres:11"
-  #  depends_on:
-  #    processPostgres:
-  #      condition: service_healthy           
-  #  
-  #  environment:
-  #    - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
-  #    - WORKER_BASE_URL=http://cdkWorker:8080/worker/api/
-  #  ports:
-  #    - "8083:8080"  # Dashboard & openapi for curator worker    
-  #  restart: "always"
+  # db_init_data:
+  #   image: postgres:10.1
+  #   environment:
+  #     - POSTGRES_USER=fedoraAdmin
+  #     - POSTGRES_PASSWORD=fedoraAdmin
+  #     - POSTGRES_DB=kramerius
+  #   entrypoint: >
+  #     bash -c "
+  #     su - postgres -c \"
+  #       psql -d kramerius <<'SQL'
+  #       INSERT INTO right_entity (right_id, uuid, action, group_id, role)
+  #       SELECT 
+  #           nextval('right_id_sequence'), 
+  #           'uuid:1', 
+  #           'a_admin_api_specification_read', 
+  #           group_id,
+  #           'common_users'
+  #       FROM group_entity 
+  #       WHERE gname = 'common_users';
+  #       SQL
+  #     \"
+  #     "
+
+  # handly adding rights to postgresql
+  # sudo docker exec -it container_id /bin/bash
+  # su - postgres
+  # psql -d kramerius
+  # INSERT INTO right_entity (right_id, uuid, action, group_id, role)
+  # SELECT 
+  #     nextval('right_id_sequence'), 
+  #     'uuid:1',
+  #     'a_admin_api_specification_read',
+  #     group_id,
+  #     'common_users'
+  # FROM group_entity
+  # WHERE gname = 'common_users';
+  # select * from right_entity;
 
 
-  # CURATOR worker 
-  curatorWorker:
-    image: "ceskaexpedice/curator-worker:7.2.0"
-    depends_on:
-      processPostgres:
-        condition: service_healthy           
+  solr_update:
+    image: solr:9.6.0 
     environment:
-      - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
-      - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
+      - JAVA_OPTS="-Xms1G -Xmx2G"
+      - "SOLR_JAVA_MEM=-Xms1g -Xmx2g"      
     ports:
-      - "8084:8080"  # Dashboard & openapi for cdk worker    
+      - "8984:8983" # check it
+    volumes:
+      - ./mnt/containers/solr_update/data:/var/solr/data # check it
     restart: "always"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8984/solr/admin/info/system"] # check it
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 
-  # PUBLIC worker 
-  publicWorker:
-    image: "ceskaexpedice/public-worker:7.2.0"
-    depends_on:
-      processPostgres:
-        condition: service_healthy           
-    environment:
-      - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
-      - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
-    ports:
-      - "8086:8080"  # Dashboard & openapi for public worker    
-    restart: "always"
+# notes
+# http://localhost:8089/search/openapi/admin/v7.0/index.html
+
+# vytvoreni noveho processing indexu pres openapi
+# Procesy / processes
+# {"defid":"processing_rebuild","params":{}}
+
+# indexace
+# {"defid":"new_indexer_index_model","params":{"type":"TREE_AND_FOSTER_TREES","pid":"model:monograph","ignoreInconsistentObjects":true,"indexNotIndexed":true,"indexRunningOrError":true,"indexIndexed":true,"indexIndexedOutdated":true}}
