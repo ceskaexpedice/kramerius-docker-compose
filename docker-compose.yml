@@ -240,7 +240,7 @@ services:
     restart: "always"
 
   processManager:
-    image: "ceskaexpedice/process-manager:1.0"
+    image: "ceskaexpedice/process-manager:1.5"
     depends_on:
       processPostgres:
         condition: service_healthy           
