@@ -305,7 +305,7 @@ services:
       - ./temp/:/usr/local/tomcat/temp/
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
-      - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
+      - WORKER_BASE_URL=http://publicWorker:8080/worker/api/
     ports:
       - "8086:8080"  # Dashboard & openapi for public worker    
     restart: "always"
