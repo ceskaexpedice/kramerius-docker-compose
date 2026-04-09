@@ -285,6 +285,8 @@ services:
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
+      - WORKER_LOOP_SLEEP_SEC_KEY=0.3
+      - HAZELCAST_SERVER_ADDRESSES=lock_server:5701
     ports:
       - "8084:8080"  # Dashboard & openapi for cdk worker    
     restart: "always"
