@@ -276,11 +276,13 @@ services:
       processPostgres:
         condition: service_healthy           
     volumes:
-      - ./logging.properties:/usr/local/tomcat/conf/logging.properties
+      # uncomment if it's necessary
+      # - ./logging.properties:/usr/local/tomcat/conf/logging.properties
       - ./mnt/import/.kramerius4:/root/.kramerius4/
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
-      - ./logs/tomcat:/usr/local/tomcat/logs
+      # uncomment if it's necessary
+      # - ./logs/tomcat:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
@@ -299,11 +301,13 @@ services:
       processPostgres:
         condition: service_healthy           
     volumes:
-      - ./logging.properties:/usr/local/tomcat/conf/logging.properties
+      # uncomment if it's necessary
+      # - ./logging.properties:/usr/local/tomcat/conf/logging.properties
       - ./mnt/import/.kramerius4:/root/.kramerius4/
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
-      - ./logs/tomcat:/usr/local/tomcat/logs
+      # uncomment if it's necessary
+      # - ./logs/tomcat:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
