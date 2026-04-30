@@ -26,7 +26,6 @@ services:
 #     - ./security/cacerts:/opt/java/openjdk/lib/security/cacerts  # in case 500 error - unable to find valid certificate
 #     - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
- 
     restart: "always"
     depends_on:
       iipimage:
@@ -44,6 +43,7 @@ services:
       keycloak_eduid:
         condition: service_healthy
       
+
   krameriusPostgres:
     image: "postgres:10.1"
     environment:
@@ -55,6 +55,7 @@ services:
     ports:
       - "15432:5432"      
     restart: "always"
+
 
   kramerius_pgbackups:
     container_name: KrameriusPostgresBackup
@@ -77,6 +78,7 @@ services:
       - BACKUP_KEEP_WEEKS=1
       - BACKUP_KEEP_MONTHS=1
       - HEALTHCHECK_PORT=81
+
 
   memcached:
     image: memcached:latest
@@ -112,6 +114,7 @@ services:
           - audioserver.domena.cz # check it
     restart: "always"
  
+
   solr:
     image: solr:9.6.0 
     environment:
@@ -128,6 +131,7 @@ services:
       timeout: 10s
       retries: 3
 
+
   keycloakPostgres_eduid:
     image: "postgres:14.10"
     volumes:
@@ -137,6 +141,7 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: keycloak
+      
       
   keycloak_pgbackups:
     container_name: KeycloakPostgres_backup
@@ -282,8 +287,6 @@ services:
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
       - ./mnt/containers/worker:/root/.processplatform/
-      # uncomment if it's necessary
-      # - ./logs/tomcat:/usr/local/tomcat/logs
       - ./logs/curatorworker:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
     environment:
@@ -309,8 +312,6 @@ services:
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
       - ./mnt/containers/worker:/root/.processplatform/
-      # uncomment if it's necessary
-      # - ./logs/tomcat:/usr/local/tomcat/logs
       - ./logs/publicworker:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
     environment:
