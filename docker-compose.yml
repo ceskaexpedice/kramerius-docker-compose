@@ -21,7 +21,7 @@ services:
       - ./mnt/import/.kramerius4:/root/.kramerius4/
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
-      - ./logs/tomcat:/usr/local/tomcat/logs
+      - ./logs/kramerius:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
 #     - ./security/cacerts:/opt/java/openjdk/lib/security/cacerts  # in case 500 error - unable to find valid certificate
 #     - /etc/timezone:/etc/timezone:ro
@@ -91,6 +91,8 @@ services:
       - ./mnt/imageserver/iip-data:/data:ro
       - ./mnt/imageserver/iip-data/media:/media:ro
     restart: "always"
+
+
   imageserver:
     image: ceskaexpedice/iipsrv-nginx:2018
     user: '0'
@@ -113,8 +115,8 @@ services:
         aliases:
           - audioserver.domena.cz # check it
     restart: "always"
- 
 
+    
   solr:
     image: solr:9.6.0 
     environment:
@@ -124,6 +126,7 @@ services:
       - "127.0.0.1:8983:8983"
     volumes:
       - ./mnt/containers/solr/data:/var/solr/data
+      - ./logs/solr:/var/solr/logs
     restart: "always"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8983/solr/admin/info/system"]
@@ -247,8 +250,9 @@ services:
     image: "ceskaexpedice/process-manager:1.5"
     depends_on:
       processPostgres:
-        condition: service_healthy           
-    
+        condition: service_healthy
+    volumes:
+      - ./logs/processmanager:/usr/local/tomcat/logs
     environment:
       - JDBC_USERNAME=process
       - JDBC_PASSWORD=process
