@@ -284,8 +284,8 @@ services:
       - ./mnt/containers/worker:/root/.processplatform/
       # uncomment if it's necessary
       # - ./logs/tomcat:/usr/local/tomcat/logs
-      - ./temp/:/usr/local/tomcat/temp/
       - ./logs/curatorworker:/usr/local/tomcat/logs
+      - ./temp/:/usr/local/tomcat/temp/
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://curatorWorker:8080/worker/api/
@@ -311,8 +311,8 @@ services:
       - ./mnt/containers/worker:/root/.processplatform/
       # uncomment if it's necessary
       # - ./logs/tomcat:/usr/local/tomcat/logs
-      - ./temp/:/usr/local/tomcat/temp/
       - ./logs/publicworker:/usr/local/tomcat/logs
+      - ./temp/:/usr/local/tomcat/temp/
     environment:
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://publicWorker:8080/worker/api/
