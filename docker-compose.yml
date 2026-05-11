@@ -324,3 +324,68 @@ services:
     ports:
       - "8086:8080"  # Dashboard & openapi for public worker    
     restart: "always"
+
+
+
+    
+  ###### --- UPDATE EXAMPLE --- ######
+  # kramerius_update:
+  #   image: ceskaexpedice/kramerius:7.2.0
+  #   user: '0'
+  #   ports:
+  #     - "8089:8080" # check it
+  #     - "5006:5005" # check it
+  #     - "8010:8009" # check it
+  #   environment:      
+  #     - UMASK=000
+  #     - HAZELCAST_SERVER_ADDRESSES=lock_server:5701
+  #     - JAVA_OPTS=-Dfile.encoding=UTF-8 
+  #   volumes:
+  #     # Tomcat image - 7.0.33 and more  
+  #     - ./server.xml:/usr/local/tomcat/tomcat/conf/server.xml
+  #     - ./logging.properties:/usr/local/tomcat/conf/logging.properties
+  #     - ./mnt/import/.kramerius4:/root/.kramerius4/
+  #     - ./mnt/import/.kramerius4/configuration_update.properties:/root/.kramerius4/configuration.properties:ro # check it
+  #     - ./mnt/import/.kramerius4/data:/root/.kramerius4/data:ro # check it
+  #     - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
+  #     - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
+  #     - ./logs/tomcat:/usr/local/tomcat/logs
+  #     - ./temp/:/usr/local/tomcat/temp/
+  #     - /etc/timezone:/etc/timezone:ro
+  #     - /etc/localtime:/etc/localtime:ro
+  #   restart: "always"
+
+
+  # krameriusPostgres_update:
+  #   image: "postgres:10.1"
+  #   environment:
+  #     - POSTGRES_USER=fedoraAdmin
+  #     - POSTGRES_PASSWORD=fedoraAdmin
+  #     - POSTGRES_DB=kramerius
+  #   volumes:
+  #     - ./mnt/containers/krameriuspostgres_update:/var/lib/postgresql/data
+  #   restart: "always"
+
+
+  # solr_update:
+  #   image: solr:9.6.0 
+  #   environment:
+  #     - JAVA_OPTS="-Xms1G -Xmx2G"
+  #     - "SOLR_JAVA_MEM=-Xms1g -Xmx2g"      
+  #   ports:
+  #     - "8984:8983" # check it
+  #   volumes:
+  #     - ./mnt/containers/solr_update/data:/var/solr/data # check it
+  #     - ./logs/solr:/var/solr/logs
+  #   restart: "always"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8984/solr/admin/info/system"] # check it
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
+
+
+  
+
+
