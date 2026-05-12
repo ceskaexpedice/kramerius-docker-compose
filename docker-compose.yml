@@ -288,6 +288,8 @@ services:
       # uncomment if it's necessary
       # - ./logging.properties:/usr/local/tomcat/conf/logging.properties
       - ./mnt/import/.kramerius4:/root/.kramerius4/
+      # - ./mnt/import/.kramerius4/configuration_update.properties:/root/.kramerius4/configuration.properties:ro # for update process
+      # - ./mnt/import/.kramerius4/data:/root/.kramerius4/data:ro # for update process
       - ./mnt/imageserver/iip-data/:/mnt/imageserver/iip-data/
       - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
       - ./mnt/containers/worker:/root/.processplatform/
