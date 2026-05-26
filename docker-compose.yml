@@ -84,6 +84,8 @@ services:
     image: memcached:latest
     command: memcached
     restart: "always"
+
+    
   iipimage:
     image: ceskaexpedice/iipsrv-imageserver:2018
     user: '0'
