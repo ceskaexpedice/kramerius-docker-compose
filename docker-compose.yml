@@ -355,7 +355,7 @@ services:
   #     - ./mnt/imageserver/audioserver/:/mnt/imageserver/audioserver/
   #     - ./logs/kramerius_update:/usr/local/tomcat/logs
   #     - ./temp/:/usr/local/tomcat/temp/
-  #     - /etc/timezone:/etc/timezone:ro
+  #     # - /etc/timezone:/etc/timezone:ro
   #     - /etc/localtime:/etc/localtime:ro
   #   restart: "always"
 
