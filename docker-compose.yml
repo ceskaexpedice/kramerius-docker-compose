@@ -262,7 +262,7 @@ services:
 
   # CURATOR worker 
   curatorWorker:
-    image: "ceskaexpedice/curator-worker:7.2.0"
+    image: "ceskaexpedice/curator-worker:7.2.1"
     depends_on:
       processPostgres:
         condition: service_healthy           
@@ -289,7 +289,7 @@ services:
 
   # PUBLIC worker 
   publicWorker:
-    image: "ceskaexpedice/public-worker:7.2.0"
+    image: "ceskaexpedice/public-worker:7.2.1"
     depends_on:
       processPostgres:
         condition: service_healthy           
