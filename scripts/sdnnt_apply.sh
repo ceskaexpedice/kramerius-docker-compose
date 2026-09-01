@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Configuration
-# Fill in all the placeholders marked with TODO
+# Fill in all placeholders marked with TODO
 
 kramUrl="http://localhost:8088"
 clientId="TODO"
@@ -21,8 +21,7 @@ if [ -z "$accessToken" ] || [ "$accessToken" = "null" ]; then
   exit 1
 fi
 
-curl -X POST "$kramUrl/search/api/admin/v7.0/processes" \
+curl -X GET "$kramUrl/search/api/admin/v7.0/sdnnt/sync/batches" \
   -H "Content-Type: application/json" \
   -H "X-Forwarded-For: $forwardedFor" \
-  -H "Authorization: Bearer $accessToken" \
-  -d '{"defid":"sdnnt-sync","params":{}}'
+  -H "Authorization: Bearer $accessToken"
