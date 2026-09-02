@@ -2,7 +2,7 @@
 version: "3"
 services:
   kramerius:
-    image: ceskaexpedice/kramerius:${APP_VERSION} # check it
+    image: ceskaexpedice/kramerius:${CORE_VERSION} # check it
     user: '0'
     ports:
       - "8088:8080"
@@ -263,7 +263,7 @@ services:
 
   # CURATOR worker 
   curatorWorker:
-    image: "ceskaexpedice/curator-worker:${APP_VERSION}"
+    image: "ceskaexpedice/curator-worker:${CORE_VERSION}"
     depends_on:
       processPostgres:
         condition: service_healthy           
@@ -291,7 +291,7 @@ services:
 
   # PUBLIC worker 
   publicWorker:
-    image: "ceskaexpedice/public-worker:${APP_VERSION}"
+    image: "ceskaexpedice/public-worker:${CORE_VERSION}"
     depends_on:
       processPostgres:
         condition: service_healthy           
