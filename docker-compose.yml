@@ -306,6 +306,7 @@ services:
       - ./logs/publicworker:/usr/local/tomcat/logs
       - ./temp/:/usr/local/tomcat/temp/
     environment:
+      - UMASK=000
       - JAVA_OPTS=-Duser.timezone=Europe/Prague
       - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
       - WORKER_BASE_URL=http://publicWorker:8080/worker/api/
