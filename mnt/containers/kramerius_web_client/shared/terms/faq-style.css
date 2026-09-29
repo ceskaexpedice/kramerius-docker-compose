@@ -1,0 +1,285 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.5;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  color: rgba(0,0,0,.87);
+}
+
+body {
+  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 2em 1em 4em 1em;
+  font-size: 19px;
+}
+
+p {
+  display: block;
+  color: #444;;
+}
+
+a {
+  color: #0277bc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.app-content {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 19px;
+}
+
+a.app-approve {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  background-color: #0277BC;
+  text-align: center;
+  outline: 0;
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 1rem;
+  box-shadow: none!important;
+  margin-bottom:20px;
+}
+
+.app-warn {
+  background: #d44949;
+  color: #fff;
+  padding: 10px;
+}
+
+.app-footer {
+  margin: 80px auto 0 auto;
+  overflow: hidden;
+  width: 75%;
+}
+
+.app-footer a {
+  opacity: 0.6;
+  width: 25%;
+  display: block;
+  float: left;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.app-footer a:hover {
+  opacity: 1;
+}
+
+.app-footer img {
+  height: 70px;
+}
+
+@media screen and (max-width: 1000px) {
+  .app-footer a {
+    width: 75%;
+  }
+}
+
+p .app-small {
+  display: block;
+  font-size: 14px;
+  color: #555;
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-family: "Roboto Condensed";
+  margin: 0;
+  color: #939393;
+}
+h2 {
+  font-size: 1.3rem;
+  font-family: "Roboto Condensed";
+  margin: 0;
+  color: #555;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+table {
+  margin:auto;
+}
+
+tr {
+	background-color: #e9e9e9;
+	border-bottom: 1px solid #d1d1d1;
+}
+tr:nth-child(even) {
+	background-color: #f1f1f1;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+header img {
+  margin-right: 1em;
+}
+
+article {
+  margin: 4em 0;
+}
+
+
+article img {
+  display: block;
+  height: auto;
+  margin: 0.25em 0;
+  max-height: 320px;
+  max-width: 100%;
+}
+
+li {
+  text-align: left;
+}
+
+.login {
+  padding: 0.1em 1em;
+  margin: 1em auto;
+  text-align: center;
+}
+
+.login ul {
+  list-style: none;
+  padding: 0;
+}
+
+.login li {
+  text-align: center;
+}
+
+.login label {
+  align-items: center;
+  display: flex;
+  font-size: 1.3rem;
+  justify-content: center;
+}
+
+.login input[type="checkbox"] {
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+button[type="submit"],
+.styled-link {
+  background-color: #0277bc;
+  border-radius: 2px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 1em;
+  margin: 1em auto;
+  padding: 0.5rem 1rem;
+}
+
+small,
+.small {
+  font-size: 0.8em;
+}
+
+.shadow {
+  box-shadow: 0 2px 2px 0 transparent, 0 1px 5px 0 rgb(200 200 200);
+}
+
+.anchor {
+  vertical-align: middle;
+}
+
+.logo-slider {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  margin: 4em -0.5em 0;
+  padding: 0;
+}
+
+.logo-slider img {
+  height: 3rem;
+  margin: 0.5em;
+  filter: grayscale(0.25);
+}
+
+.logo-slider img:hover {
+  filter: grayscale(0);
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+  body {
+    padding: 2em 1em;
+  }
+
+  header {
+    justify-content: start;
+  }
+
+  article {
+    margin: 2em 0;
+  }
+
+  .logo-slider {
+    margin-top: 2em;
+  }
+  .no-js :lang(en) {
+      display: none;
+  }
+
+  .lang-en :lang(cs) {
+      display: none;
+  }
+
+  .lang-cs :lang(en) {
+      display: none;
+  }
+}
+
+.no-js :lang(en) {
+  display: none;
+}
+
+.lang-en :lang(cs) {
+  display: none;
+}
+
+.lang-cs :lang(en) {
+  display: none;
+}
