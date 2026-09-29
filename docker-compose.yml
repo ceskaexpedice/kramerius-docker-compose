@@ -315,6 +315,61 @@ services:
     restart: "always"
 
 
+  kramerius_web_client:
+    image: ghcr.io/ceskaexpedice/kramerius-web-client:${WEB_CLIENT_VERSION}
+    container_name: kramerius_web_client
+    environment:
+      - VHOST_WEBCLIENT_NAME=kramerius.domain.cz # check it
+    volumes:
+      - ./mnt/containers/kramerius_web_client/vhosts:/usr/local/apache2/conf/vhosts
+      - ./mnt/containers/kramerius_web_client/shared/globals.js:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared/globals.js:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+
+  kramerius_admin_client:
+    image: ghcr.io/ceskaexpedice/kramerius-admin-client:${ADMIN_CLIENT_VERSION}
+    container_name: kramerius_admin_client
+    environment:
+      - VHOST_ADMINCLIENT_NAME=kramerius-admin.domain.cz # check it
+    volumes:
+      - ./mnt/containers/kramerius_admin_client/vhosts:/usr/local/apache2/conf/vhosts
+      - ./mnt/containers/kramerius_admin_client/shared/globals.js:/usr/local/apache2/htdocs/kramerius-admin/assets/shared/globals.js:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+
+  kramerius_httpd_proxy:
+    image: ghcr.io/ceskaexpedice/kramerius-httpd-proxy:${HTTPD_PROXY_VERSION}
+    container_name: kramerius_httpd_proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - VHOST_WEBCLIENT_NAME=kramerius.domain.cz # check it
+      - VHOST_ADMINCLIENT_NAME=kramerius-admin.domain.cz # check it
+      - VHOST_KEYCLOAK_NAME=eduid.domain.cz # check it
+    volumes:
+      - ./mnt/containers/kramerius_httpd_proxy/vhosts:/usr/local/apache2/conf/vhosts
+      - ./mnt/containers/kramerius_httpd_proxy/certs:/etc/ssl/kramerius_httpd_proxy:ro
+    depends_on:
+      keycloak_eduid:
+        condition: service_healthy
+      kramerius_web_client:
+        condition: service_healthy
+      kramerius_admin_client:
+        condition: service_healthy
+    restart: unless-stopped
+
+
 
     
   ###### --- UPDATE EXAMPLE --- ######
