@@ -320,7 +320,7 @@ services:
       - VHOST_WEBCLIENT_NAME=kramerius.domain.cz # check it
     volumes:
       - ./mnt/containers/kramerius_web_client/vhosts:/usr/local/apache2/conf/vhosts
-      - ./mnt/containers/kramerius_web_client/shared/globals.js:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared/globals.js:ro
+      - ./mnt/containers/kramerius_web_client/shared:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       interval: 10s
@@ -336,7 +336,7 @@ services:
       - VHOST_ADMINCLIENT_NAME=kramerius-admin.domain.cz # check it
     volumes:
       - ./mnt/containers/kramerius_admin_client/vhosts:/usr/local/apache2/conf/vhosts
-      - ./mnt/containers/kramerius_admin_client/shared/globals.js:/usr/local/apache2/htdocs/kramerius-admin/assets/shared/globals.js:ro
+      - ./mnt/containers/kramerius_admin_client/shared:/usr/local/apache2/htdocs/kramerius-admin/assets/shared:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       interval: 10s
