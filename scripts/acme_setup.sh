@@ -43,6 +43,16 @@ for arg in "$@"; do
   esac
 done
 
+require_root() {
+  if [ "$(id -u)" -ne 0 ]; then
+    echo "Tento skript je potreba spustit jako root, napr.:"
+    echo "  sudo $0"
+    echo
+    echo "Duvod: acme.sh v rezimu --standalone potrebuje poslouchat na portu 80."
+    exit 1
+  fi
+}
+
 # Nainstaluje acme.sh, pokud jeste neni dostupny,
 # a nastavi Let's Encrypt jako vychozi certifikacni autoritu.
 ensure_acme_sh() {
@@ -100,6 +110,7 @@ issue_and_install_cert() {
 }
 
 # Pripravi cilovy adresar a acme.sh.
+require_root
 mkdir -p "$CERT_DIR"
 ensure_acme_sh
 
