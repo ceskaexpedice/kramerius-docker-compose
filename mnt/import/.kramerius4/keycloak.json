@@ -1,6 +1,6 @@
 {
   "realm": "kramerius",
-  "auth-server-url": "https://eduid.____/",
+  "auth-server-url": "https://eduid.domain.cz/",
   "ssl-required": "external",
   "resource": "krameriusClient",
   "public-client": true,
