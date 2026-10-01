@@ -61,10 +61,4 @@ Poznámka: Adresáře `ssl` a `conf` na lokálním stroji je nutno nejdříve vy
    0 23 * * 1,3,5 /data/kramerius/cronscripts/sdnnt_apply.sh
 ```
 
-## Nova instalace vsech komponent pod dockerem
-1. Upravit domeny v configuration.properties
-2. Upravit domenu v keycloak.json
-3. Upravit globals.js - domeny v admin a web clientovi
-4. Vygenerovat certifikaty acme.sh
-
     
