@@ -40,6 +40,14 @@ services:
         condition: service_started
       keycloak_eduid:
         condition: service_healthy
+      lock_server:
+        condition: service_started
+      curatorWorker:
+        condition: service_started
+      publicWorker:
+        condition: service_started
+      #cdkWorker:
+      #  condition: service_started
       
 
   krameriusPostgres:
@@ -90,6 +98,8 @@ services:
     volumes:
       - ./mnt/imageserver/iip-data:/data:ro
       - ./mnt/imageserver/iip-data/media:/media:ro
+    depends_on:
+      - memcached
     restart: "always"
 
 
@@ -101,6 +111,8 @@ services:
       - ./mnt/imageserver/iip-data/media:/media:ro
     ports:
       - "8888:80"
+    depends_on:
+      - iipimage
     networks:
       default:
         aliases:
@@ -248,8 +260,8 @@ services:
   #  image: "ceskaexpedice/cdk-worker:7.2.0-rc1"
   #         #image: "postgres:11"
   #  depends_on:
-  #    processPostgres:
-  #      condition: service_healthy           
+  #    processManager:
+  #      condition: service_started           
   #  
   #  environment:
   #    - MANAGER_BASE_URL=http://processManager:8080/process-manager/api/
@@ -263,8 +275,8 @@ services:
   curatorWorker:
     image: "ceskaexpedice/curator-worker:${CORE_VERSION}"
     depends_on:
-      processPostgres:
-        condition: service_healthy           
+      processManager:
+        condition: service_started           
     volumes:
       # uncomment if it's necessary
       # - ./logging.properties:/usr/local/tomcat/conf/logging.properties
@@ -292,8 +304,8 @@ services:
   publicWorker:
     image: "ceskaexpedice/public-worker:${CORE_VERSION}"
     depends_on:
-      processPostgres:
-        condition: service_healthy           
+      processManager:
+        condition: service_started           
     volumes:
       # uncomment if it's necessary
       # - ./logging.properties:/usr/local/tomcat/conf/logging.properties
@@ -321,6 +333,8 @@ services:
     volumes:
       - ./mnt/containers/kramerius_web_client/vhosts:/usr/local/apache2/conf/vhosts
       - ./mnt/containers/kramerius_web_client/shared:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared:ro
+    depends_on:
+      - kramerius
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       interval: 10s
@@ -337,6 +351,8 @@ services:
     volumes:
       - ./mnt/containers/kramerius_admin_client/vhosts:/usr/local/apache2/conf/vhosts
       - ./mnt/containers/kramerius_admin_client/shared:/usr/local/apache2/htdocs/kramerius-admin/assets/shared:ro
+    depends_on:
+      - kramerius
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       interval: 10s
