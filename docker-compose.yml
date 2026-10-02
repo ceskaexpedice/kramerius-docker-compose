@@ -332,7 +332,7 @@ services:
       - VHOST_WEBCLIENT_NAME=${WEB_CLIENT_DOMAIN} # check it
     volumes:
       - ./mnt/containers/kramerius_web_client/vhosts:/usr/local/apache2/conf/vhosts
-      - ./mnt/containers/kramerius_web_client/assets/shared:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared:ro
+      - ./mnt/containers/kramerius_web_client/www/assets/shared:/usr/local/apache2/htdocs/kramerius-web-client/assets/shared:ro
     depends_on:
       - kramerius
     healthcheck:
@@ -350,7 +350,7 @@ services:
       - VHOST_ADMINCLIENT_NAME=${ADMIN_CLIENT_DOMAIN} # check it
     volumes:
       - ./mnt/containers/kramerius_admin_client/vhosts:/usr/local/apache2/conf/vhosts
-      - ./mnt/containers/kramerius_admin_client/assets/shared:/usr/local/apache2/htdocs/kramerius-admin/assets/shared:ro
+      - ./mnt/containers/kramerius_admin_client/www/assets/shared:/usr/local/apache2/htdocs/kramerius-admin/assets/shared:ro
     depends_on:
       - kramerius
     healthcheck:
