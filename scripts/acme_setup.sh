@@ -26,9 +26,9 @@ POST_HOOK="docker container inspect kramerius_httpd_proxy >/dev/null 2>&1 && doc
 RELOAD_CMD="docker container inspect kramerius_httpd_proxy >/dev/null 2>&1 && docker restart kramerius_httpd_proxy || true"
 
 # Domeny, pro ktere se budou vystavovat certifikaty.
-WEB_DOMAIN="kramerius.inovatika.dev" # check it
-ADMIN_DOMAIN="kramerius-admin.inovatika.dev" # check it
-KEYCLOAK_DOMAIN="eduid.inovatika.dev" # check it
+WEB_DOMAIN="kramerius.docmain.cz" # check it
+ADMIN_DOMAIN="kramerius-admin.domain.cz" # check it
+KEYCLOAK_DOMAIN="eduid.domain.cz" # check it
 
 for arg in "$@"; do
   case "$arg" in
