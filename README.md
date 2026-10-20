@@ -6,7 +6,7 @@ Spouštěné služby:
  - IIP server
  - Solr verze 9.X
  - Jádro krameria
- - Pomocné databáze postgres (pro jádro a pro keycloak)
+ - Pomocné databáze postgres 18 (pro jádro, procesy a keycloak), upgrade stávající instalace viz [MIGRACE-POSTGRES-18.md](MIGRACE-POSTGRES-18.md)
 
 ## Nutné instalační kroky
  1. Zkontrolovat či nahradit aktuální verzi jádra v `docker compose` https://github.com/ceskaexpedice/kramerius-docker-compose/blob/main/docker-compose.yml#L5
