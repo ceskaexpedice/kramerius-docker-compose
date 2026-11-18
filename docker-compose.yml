@@ -51,13 +51,13 @@ services:
       
 
   krameriusPostgres:
-    image: "postgres:10.1"
+    image: "postgres:${KRAMERIUS_POSTGRES_VERSION}"
     environment:
       - POSTGRES_USER=fedoraAdmin
       - POSTGRES_PASSWORD=fedoraAdmin
       - POSTGRES_DB=kramerius
     volumes:
-      - ./mnt/containers/krameriuspostgres:/var/lib/postgresql/data
+      - ./mnt/containers/krameriuspostgres18:/var/lib/postgresql
     ports:
       - "15432:5432"      
     restart: "always"
@@ -65,7 +65,7 @@ services:
 
   kramerius_pgbackups:
     container_name: KrameriusPostgresBackup
-    image: prodrigestivill/postgres-backup-local
+    image: prodrigestivill/postgres-backup-local:18
     restart: always
     volumes:
       - ./krameriuspgbackup:/backups
@@ -150,9 +150,9 @@ services:
 
 
   keycloakPostgres_eduid:
-    image: "postgres:14.10"
+    image: "postgres:${KEYCLOAK_POSTGRES_VERSION}"
     volumes:
-      - ./mnt/containers/keycloakpostgres_eduid:/var/lib/postgresql/data
+      - ./mnt/containers/keycloakpostgres_eduid18:/var/lib/postgresql
     restart: "always"
     environment:
       POSTGRES_DB: keycloak
@@ -162,7 +162,7 @@ services:
       
   keycloak_pgbackups:
     container_name: KeycloakPostgres_backup
-    image: prodrigestivill/postgres-backup-local
+    image: prodrigestivill/postgres-backup-local:18
     restart: always
     volumes:
       - ./keycloakpgbackup:/backups
@@ -221,7 +221,7 @@ services:
 
   # Process platform    
   processPostgres:
-    image: "postgres:10.1"
+    image: "postgres:${KRAMERIUS_POSTGRES_VERSION}"
     healthcheck: 
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
@@ -232,7 +232,7 @@ services:
       - POSTGRES_PASSWORD=process
       - POSTGRES_DB=process
     volumes:
-      - ./mnt/containers/processpostgres:/var/lib/postgresql/data
+      - ./mnt/containers/processpostgres18:/var/lib/postgresql
     ports:
       - "25432:5432"      
     restart: "always"
@@ -415,13 +415,13 @@ services:
 
 
   # krameriusPostgres_update:
-  #   image: "postgres:10.1"
+  #   image: "postgres:${KRAMERIUS_POSTGRES_VERSION}"
   #   environment:
   #     - POSTGRES_USER=fedoraAdmin
   #     - POSTGRES_PASSWORD=fedoraAdmin
   #     - POSTGRES_DB=kramerius
   #   volumes:
-  #     - ./mnt/containers/krameriuspostgres_update:/var/lib/postgresql/data
+  #     - ./mnt/containers/krameriuspostgres_update18:/var/lib/postgresql
   #   restart: "always"
 
 
