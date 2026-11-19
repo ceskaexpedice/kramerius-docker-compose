@@ -1,6 +1,7 @@
 services:
   kramerius:
     image: ceskaexpedice/kramerius:${CORE_VERSION} # check it
+    container_name: kramerius_core
     user: '0'
     ports:
       - "8088:8080"
@@ -52,6 +53,7 @@ services:
 
   krameriusPostgres:
     image: "postgres:${KRAMERIUS_POSTGRES_VERSION}"
+    container_name: kramerius_postgres
     environment:
       - POSTGRES_USER=fedoraAdmin
       - POSTGRES_PASSWORD=fedoraAdmin
@@ -64,8 +66,8 @@ services:
 
 
   kramerius_pgbackups:
-    container_name: KrameriusPostgresBackup
     image: prodrigestivill/postgres-backup-local:18
+    container_name: kramerius_pgbackups
     restart: always
     volumes:
       - ./krameriuspgbackup:/backups
@@ -88,12 +90,14 @@ services:
 
   memcached:
     image: memcached:latest
+    container_name: kramerius_memcached
     command: memcached
     restart: "always"
 
     
   iipimage:
     image: ceskaexpedice/iipsrv-imageserver:2018
+    container_name: kramerius_iipimage
     user: '0'
     volumes:
       - ./mnt/imageserver/iip-data:/data:ro
@@ -105,6 +109,7 @@ services:
 
   imageserver:
     image: ceskaexpedice/iipsrv-nginx:2018
+    container_name: kramerius_imageserver
     user: '0'
     volumes:
       - ./mnt/imageserver/iip-data:/data:ro
@@ -122,6 +127,7 @@ services:
     
   audioserver:
     image: nginx
+    container_name: kramerius_audioserver
     volumes:
       - ./mnt/imageserver/audioserver:/usr/share/nginx/html:ro
     networks:
@@ -133,8 +139,9 @@ services:
     
   solr:
     image: solr:9.6.0 
+    container_name: kramerius_solr
     environment:
-      - JAVA_OPTS=-XX:-UseBASE64Intrinsics ${SOLR_JAVA_OPTS} # check it - javafix
+      - SOLR_OPTS=-XX:-UseBASE64Intrinsics ${SOLR_OPTS} # check it - javafix
       - SOLR_JAVA_MEM=${SOLR_JAVA_MEM} # check it
     ports:
       - "127.0.0.1:8983:8983"
@@ -151,6 +158,7 @@ services:
 
   keycloakPostgres_eduid:
     image: "postgres:${KEYCLOAK_POSTGRES_VERSION}"
+    container_name: kramerius_keycloakpostgres_eduid
     volumes:
       - ./mnt/containers/keycloakpostgres_eduid18:/var/lib/postgresql
     restart: "always"
@@ -161,8 +169,8 @@ services:
       
       
   keycloak_pgbackups:
-    container_name: KeycloakPostgres_backup
     image: prodrigestivill/postgres-backup-local:18
+    container_name: kramerius_keycloakpgbackups
     restart: always
     volumes:
       - ./keycloakpgbackup:/backups
@@ -185,6 +193,7 @@ services:
 
   keycloak_eduid:
     image: ceskaexpedice/keycloak_eduid:22.0.11-1.10
+    container_name: kramerius_keycloak_eduid
     volumes:
       - ./mnt/containers/eduid/providers:/opt/keycloak/providers
     environment:
@@ -213,6 +222,7 @@ services:
   # Lock server 
   lock_server:
     image: "ceskaexpedice/hazelcast-locks-server:2.0"
+    container_name: kramerius_lock_server
     ports:
       - "5701:5701"
       - "5702:5702"
@@ -223,6 +233,7 @@ services:
   # Process platform    
   processPostgres:
     image: "postgres:${KRAMERIUS_POSTGRES_VERSION}"
+    container_name: kramerius_processpostgres
     healthcheck: 
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
       interval: 5s
@@ -241,6 +252,7 @@ services:
 
   processManager:
     image: "ceskaexpedice/process-manager:1.5"
+    container_name: kramerius_processmanager
     depends_on:
       processPostgres:
         condition: service_healthy
@@ -260,6 +272,7 @@ services:
   #cdkWorker:
   #  image: "ceskaexpedice/cdk-worker:7.2.0-rc1"
   #         #image: "postgres:11"
+  #  container_name: kramerius_cdkworker
   #  depends_on:
   #    processManager:
   #      condition: service_started           
@@ -275,6 +288,7 @@ services:
   # CURATOR worker 
   curatorWorker:
     image: "ceskaexpedice/curator-worker:${CORE_VERSION}"
+    container_name: kramerius_curatorworker
     depends_on:
       processManager:
         condition: service_started           
@@ -304,6 +318,7 @@ services:
   # PUBLIC worker 
   publicWorker:
     image: "ceskaexpedice/public-worker:${CORE_VERSION}"
+    container_name: kramerius_publicworker
     depends_on:
       processManager:
         condition: service_started           
