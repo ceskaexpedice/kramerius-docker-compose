@@ -141,7 +141,7 @@ services:
     image: solr:9.6.0 
     container_name: kramerius_solr
     environment:
-      - SOLR_OPTS=-XX:-UseBASE64Intrinsics ${SOLR_OPTS} # check it - javafix
+      - SOLR_OPTS=-XX:-UseBASE64Intrinsics # check it - javafix
       - SOLR_JAVA_MEM=${SOLR_JAVA_MEM} # check it
     ports:
       - "127.0.0.1:8983:8983"
@@ -227,6 +227,8 @@ services:
       - "5701:5701"
       - "5702:5702"
       - "5703:5703"
+    environment:
+      - JAVA_OPTS=-XX:-UseBASE64Intrinsics # javafix
     restart: "always"
 
 
